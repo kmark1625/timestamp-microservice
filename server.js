@@ -12,13 +12,26 @@ app.get('/', function(req, res) {
 app.get('/:timestamp', function(req, res) {
   var timestamp = req.params.timestamp;
   var parsedResponse = getParsedResponse(timestamp);
-  res.render('timestamp');
+  var timestampObject = JSON.stringify(parsedResponse);
+  res.render('timestamp', {timestampObject: timestampObject});
 })
 
 app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+  console.log('Timestamp Microservice listening on port 3000!');
 })
 
 function getParsedResponse(timestamp) {
-    console.log('Hello World!');
+  var date = new Date(timestamp);
+  var result = {"unix": null, "natural": null};
+
+  console.log('date');
+  console.log(date);
+
+  if (date === 'Invalid Date') {
+    return result;  
+  } else {
+    result.unix = date.getTime();
+    result.natural = date.toDateString();
+    return result;
+  }
 }
