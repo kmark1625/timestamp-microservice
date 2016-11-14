@@ -1,7 +1,6 @@
 var path = require('path');
 var express = require('express');
 var TimestampService = require('./timestamp-service');
-var timestampService = new TimestampService();
 var app = express();
 
 app.set('views', __dirname + '/views');
@@ -12,6 +11,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/:timestamp', function(req, res) {
+  var timestampService = new TimestampService();
   var timestamp = req.params.timestamp;
   var parsedResponse = timestampService.getParsedResponse(timestamp);
   var timestampObject = JSON.stringify(parsedResponse);
